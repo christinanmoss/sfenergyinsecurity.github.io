@@ -1,0 +1,159 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "---\n",
+        "title: \"Energy Insecurity Dashboard\"\n",
+        "output: html\n",
+        "echo: false\n",
+        "---"
+      ],
+      "id": "30fa093f"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import hvplot.pandas\n",
+        "import pandas as pd\n",
+        "import panel as pn\n",
+        "import geopandas as gpd\n",
+        "import holoviews as hv\n",
+        "import numpy as np\n",
+        "from shapely import wkt"
+      ],
+      "id": "200b73d6",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "disconnections = pd.read_csv(\"data\\CA Zip Code ALK Data.csv\")\n",
+        "zip_codes = pd.read_csv(\"data\\San_Francisco_ZIP_Codes_20241221.csv\")"
+      ],
+      "id": "7e602ca5",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "zip_codes['geometry'] = zip_codes['geometry'].apply(wkt.loads)\n",
+        "\n",
+        "zip_codes_gdf = gpd.GeoDataFrame(zip_codes, geometry='geometry')\n",
+        "\n",
+        "zip_codes_gdf.set_crs(\"EPSG:4326\", inplace=True) \n",
+        "\n",
+        "disconnections['zip_code'] = disconnections['zip_code'].astype(str)\n",
+        "zip_codes_gdf['zip_code'] = zip_codes_gdf['zip_code'].astype(str)\n",
+        "\n",
+        "merge = disconnections.merge(zip_codes_gdf, on=\"zip_code\", how='inner')\n",
+        "\n",
+        "disconnections_gdf = gpd.GeoDataFrame(merge, geometry=\"geometry\")\n",
+        "\n",
+        "month_mapping = {\n",
+        "    'Jan': 'Jan', 'January': 'Jan',\n",
+        "    'Feb': 'Feb', 'February': 'Feb',\n",
+        "    'Mar': 'Mar', 'March': 'Mar',\n",
+        "    'Apr': 'Apr', 'April': 'Apr',\n",
+        "    'May': 'May',\n",
+        "    'June': 'Jun', 'Jun': 'Jun',\n",
+        "    'July': 'Jul', 'Jul': 'Jul',\n",
+        "    'Aug': 'Aug', 'August': 'Aug',\n",
+        "    'Sep': 'Sep', 'Sept': 'Sep', 'September': 'Sep',\n",
+        "    'Oct': 'Oct', 'October': 'Oct',\n",
+        "    'Nov': 'Nov', 'November': 'Nov',\n",
+        "    'Dec': 'Dec', 'December': 'Dec'\n",
+        "}\n",
+        "\n",
+        "# Normalizing the date format \n",
+        "disconnections_gdf['month'] = disconnections_gdf['month'].map(month_mapping)\n",
+        "\n",
+        "# Converting cleaned month names to numeric\n",
+        "disconnections_gdf['month'] = pd.to_datetime(disconnections_gdf['month'], format='%b').dt.month\n",
+        "\n",
+        "\n",
+        "disconnections_gdf['date'] = pd.to_datetime(disconnections_gdf[['year', 'month']].assign(day=1))\n",
+        "disconnections_gdf['formatted_date'] = disconnections_gdf['date'].dt.strftime('%Y-%b')"
+      ],
+      "id": "6b57223d",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "pn.extension()\n",
+        "from bokeh.models import LinearColorMapper\n",
+        "from bokeh.palettes import Purples"
+      ],
+      "id": "cd2ca7d8",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "date_slider = pn.widgets.DateSlider(\n",
+        "    name='Select Date',\n",
+        "    start=disconnections_gdf['date'].min(),\n",
+        "    end=disconnections_gdf['date'].max(),\n",
+        "    value=disconnections_gdf['date'].max(),\n",
+        "    step=1,\n",
+        "    format='%Y-%b'\n",
+        ")\n",
+        "\n",
+        "# Define a callback function that updates the map based on the selected date\n",
+        "def update_map(selected_date):\n",
+        "    # Filter the data based on the selected date\n",
+        "    filtered_data = disconnections_gdf[disconnections_gdf['date'] == selected_date]\n",
+        "    \n",
+        "    # Plot the data on a map\n",
+        "    map_plot = filtered_data.hvplot(\n",
+        "        geo=True, \n",
+        "        tiles='CartoDark', \n",
+        "        color='disconnection_rate', \n",
+        "        cmap='Purples', \n",
+        "        colorbar=True, \n",
+        "        size=10,\n",
+        "        hover_cols=['ZIP_Code', 'disconnection_rate', 'disconnection_count'], \n",
+        "        width=800, \n",
+        "        height=600\n",
+        "    )\n",
+        "    \n",
+        "    return map_plot\n",
+        "\n",
+        "# Set up the dashboard layout with the map and the slider\n",
+        "dashboard = pn.Column(\n",
+        "    date_slider,\n",
+        "    pn.bind(update_map, selected_date=date_slider)\n",
+        ")\n",
+        "\n",
+        "# Display the dashboard\n",
+        "dashboard.save(\"dashboard.html\", embed=True)\n",
+        "\n",
+        "cat('<iframe src=\"dashboard.html\" width=\"100%\" height=\"800px\"></iframe>')"
+      ],
+      "id": "d05a8fe1",
+      "execution_count": null,
+      "outputs": []
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "name": "python3",
+      "language": "python",
+      "display_name": "Python 3 (ipykernel)",
+      "path": "C:\\Users\\cnmit\\anaconda3\\envs\\musa-550-fall-2023\\share\\jupyter\\kernels\\python3"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}

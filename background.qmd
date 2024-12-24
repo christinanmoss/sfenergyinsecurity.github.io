@@ -1,0 +1,36 @@
+# Background 
+
+## Utility Disconnections
+
+Since 2010, California has required disconnection reporting. We retrieved data on disconnections in California through the Utility Disconnection Dashboard created by the Energy Justice Lab (Utility Disconnections Dashboard, 2024). The lab acquired this data from local governments including the City and County of San Francisco (2017-2022) through open records requests (Utility Disconnections Dashboard, 2024).
+
+## Solar Suitability
+
+Once we identified neighborhoods with high levels of utility disconnections, we wanted to understand which neighborhoods were also highly suitable for solar panels. We used data from the Google Project Sunroof data explorer. This tool estimates the technical solar potential of all buildings in a region using criteria such as sunlight, installation size, and space and obstacles (Project Sunroof, 2024). We were particularly interested in sunlight exposure. 
+
+## Rent-to-Own Ratio
+
+After identifying neighborhoods that could harness solar energy, we wanted to understand which type of policy intervention would best serve residents. Residential- or community-based programs?
+
+For communities with high levels of homeownership, programs that support residential solar can help supply reliable and inexpensive energy while also increasing property values (US Department of Energy, 2023). 
+
+For communities with high levels of renters, however, community solar programs may be a better option because they resolve the split-incentive problem. The split-incentive problem refers to when landlords are discouraged from adopting rooftop solar because while they must accept the upfront costs and risk of installing rooftop solar, the benefits flow to tenants (Sunter et al., 2019). This can fuel discrimination. As of 2016, more than half of Americans who identify as black or Hispanic renter their homes compared to only 28% of those who identify as white (Sunter et al., 2019). Community solar programs allow residents to subscribe to a solar program owned and operated by a third-party and have been shown to provide greater electricity rate stability and bill savings for a wider spectrum of customers (Community Solar, 2014). 
+
+We evaluated the renter-to-owner ratio of neighborhoods in San Francisco using data from the Census’ 2022 American Community Survey. Neighborhoods with higher rates of renters may be better fits for community solar programs, while neighborhoods with higher rates of owners may be better fits for residential solar programs. This analysis is meant as jumping off point to guide further research. 
+
+### Sources 
+
+Bednar, D. & Reames, T. (2020). Recognition of and response to energy poverty in
+the United States. Nature Energy, 5. 432–439. https://doi.org/10.1038/s41560-020-0582-0
+
+Carley, S., Graff, M., Konisky, D., Memmott, T. (2022). Behavioral and financial coping strategies among energy-insecure households. PNAS. https://doi.org/10.1073/pnas.2205356119
+
+Community Solar. National Renewable Energy Laboratory. Retrieved December 24, 2024. https://www.nrel.gov/state-local-tribal/community-solar.html 
+
+Project Sunroof Data Explorer. Google Project Sunroof. Retrieved December 24, 2024. https://sunroof.withgoogle.com/data-explorer/place/ChIJIQBpAG2ahYAR_6128GcTUEo/ 
+
+Sunter, D.A., Castellanos, S. & Kammen, D.M. Disparities in rooftop photovoltaics deployment in the United States by race and ethnicity. Nat Sustain 2, 71–76 (2019). https://doi.org/10.1038/s41893-018-0204-z 
+
+U.S. Department of Energy. (2023, Feb. 13). 5 benefits of residential solar. U.S. Department of Energy. https://www.energy.gov/energysaver/articles/5-benefits-residential-solar#:~:text=Residential%20solar%20is%20more%20affordable,set%20to%20decrease%20to%2026%25 
+
+Utility Disconnections Dashboard. Energy Justice Lab. Retrieved December 12, 2024. https://http-149-165-173-211-80.proxy-js2-iu.exosphere.app/ 

@@ -1,0 +1,16 @@
+---
+title: "MUSA 550: Final Project - Energy Insecurity Dashboard"
+subtitle: "A dashboard created by Christina Moss and Sara Lepley."
+---
+
+## An Introduction
+
+Millions of Americans regularly struggle to pay their electricity bills (Carley et al., 2022). When a household gets disconnected from their electricity utility provider, the consequences can include debt accumulation, forgoing food or medicine, homelessness, and, in extreme cases, death (Carley et al., 2022). 
+
+While existing policies have approached energy insecurity as a temporary emergency that can be solved with short-term assistance, researchers have demonstrated the need for a longer-term fix (Bednar and Reames, 2020). Solar energy presents a potential solution. 
+
+In 2024, the Biden-Harris administration announced $7 billion in Solar for All grants to deliver solar energy to low-income residents through residential and community solar (Biden-Harris, 2024). 
+
+We created this dashboard to help target neighborhoods in San Francisco that could benefit from Solar for All grant funding. 
+
+
